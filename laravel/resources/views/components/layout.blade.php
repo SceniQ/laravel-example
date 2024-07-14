@@ -3,15 +3,10 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-
     <meta http-equiv="X-UA-Comaptible" content="ie=edge" />
-
     <title>{{ env('APP_NAME') }}</title>
-
     @vite(['resources\css\app.css','laravel\resources\js\app.js'])
 
 </head>
