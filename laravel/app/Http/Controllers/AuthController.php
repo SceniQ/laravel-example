@@ -2,16 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     // Register user
     public function register(Request $request){
         //1 - Validate form
-        //2 - Register
+        $fields = $request -> validate([
+            'username' => ['required','max:255'],
+            'email' => ['required','max:255', 'email','unique:users'],
+            'password' => ['required','min:3','max:8','confirmed']
+        ]);
+        //2 - Register user - persist data in DB
+        $user = User ::create($fields);
+
         //3 - Login
-        //4 - Redirect
-        dd($request->username);
+        Auth::login($user);
+
+        //4 - Redirect to Homepage
+        return redirect() -> route('home');
+
+        // die + dump/ die, dump + debug
+        //dd($request->username);
     }
 }

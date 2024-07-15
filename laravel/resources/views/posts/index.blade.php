@@ -1,3 +1,8 @@
 <x-layout>
-    <h1>Home page</h1>
+    @auth
+        <h1>Logged in user Home page</h1>
+    @endauth
+    @guest
+        <h1>Guest user Home page</h1>
+    @endguest
 </x-layout>
