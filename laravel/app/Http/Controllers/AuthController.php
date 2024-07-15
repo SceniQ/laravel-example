@@ -28,4 +28,20 @@ class AuthController extends Controller
         // die + dump/ die, dump + debug
         //dd($request->username);
     }
+
+    //Login user
+    public function login(Request $request){
+        $fields = $request -> validate([
+            'email' => ['required','max:255', 'email'],
+            'password' => ['required']
+        ]);
+
+        //Try to log the user in
+        if(Auth::attempt($fields, $request->remember)){
+            return redirect() -> route('home');
+        }else{
+            return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
+        }
+
+    }
 }
