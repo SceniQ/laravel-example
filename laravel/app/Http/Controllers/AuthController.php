@@ -16,17 +16,13 @@ class AuthController extends Controller
             'email' => ['required','max:255', 'email','unique:users'],
             'password' => ['required','min:3','max:8','confirmed']
         ]);
+
         //2 - Register user - persist data in DB
         $user = User::create($fields);
-
         //3 - Login
         Auth::login($user);
-
         //4 - Redirect to Homepage
         return redirect() -> route('home');
-
-        // die + dump/ die, dump + debug
-        //dd($request->username);
     }
 
     //Login user
@@ -36,16 +32,12 @@ class AuthController extends Controller
             'password' => ['required']
         ]);
 
-    
-        // Dump data
-        dd($fields,$request->remember,Auth::attempt($fields, $request->remember));
-        
-        //Try to log the user in
-        // if(Auth::attempt($fields, $request->remember)){
-        //     return redirect() -> route('home');
-        // }else{
-        //     return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
-        // }
-
+        $user = User::where('email','=', $fields['email'])->first();
+        if($user && $user -> password == $fields['password']){
+            Auth::login($user);
+            return redirect() -> intended(); 
+        }else{
+            return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
+        }
     }
 }
