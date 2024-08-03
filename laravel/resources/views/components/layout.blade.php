@@ -15,10 +15,20 @@
     <header>
         <nav>
             <a href="{{route('home')}}" class="nav-link">Home</a>
+            @auth
+                <div class="relative grid place-items-center">
+                    {{-- Dropown menu --}}
+                    <button type="button" class="round-btn">
+                        <img src="https://picsum.photos/seed/picsum/200" alt="pro_pic">
+                    </button>
+                </div>
+            @endauth
+            @guest
             <div>
                 <a href="{{route('login')}}" class="nav-link">Login</a>
                 <a href="{{route('register')}}" class="nav-link">Register</a>
             </div>
+            @endguest
         </nav>
     </header>
     
