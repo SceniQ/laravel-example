@@ -17,7 +17,7 @@ class AuthController extends Controller
             'password' => ['required','min:3','max:8','confirmed']
         ]);
         //2 - Register user - persist data in DB
-        $user = User ::create($fields);
+        $user = User::create($fields);
 
         //3 - Login
         Auth::login($user);
@@ -36,12 +36,16 @@ class AuthController extends Controller
             'password' => ['required']
         ]);
 
+    
+        // Dump data
+        dd($fields,$request->remember,Auth::attempt($fields, $request->remember));
+        
         //Try to log the user in
-        if(Auth::attempt($fields, $request->remember)){
-            return redirect() -> route('home');
-        }else{
-            return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
-        }
+        // if(Auth::attempt($fields, $request->remember)){
+        //     return redirect() -> route('home');
+        // }else{
+        //     return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
+        // }
 
     }
 }
