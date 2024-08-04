@@ -35,7 +35,7 @@
             </div>
 
             {{-- Submit btn --}}
-            <button class="btn">Register</button>
+            <button class="primary-btn">Register</button>
 
         </form>
 

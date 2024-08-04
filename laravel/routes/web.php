@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -21,3 +22,7 @@ Route::post('/register',[AuthController::class, 'register']);
 
 Route::view('/login','auth.login') ->name('login');
 Route::post('/login',[AuthController::class, 'login']);
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
+
+Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+Route::view('/dashboard','users.dashboard') ->name('dashboard');

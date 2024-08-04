@@ -32,7 +32,7 @@
                 <p class="error"> {{ $message}}</p>
             @enderror
             {{-- Submit btn --}}
-            <button class="btn">Login</button>
+            <button class="primary-btn">Login</button>
 
         </form>
 
