@@ -20,7 +20,7 @@ class PostFactory extends Factory
             //
             'user_id' => 1,
             'title'=> fake()->sentence(10),
-            'body'=> fake()->paragraph(20),
+            'body'=> fake()->paragraph(30),
         ];
     }
 }

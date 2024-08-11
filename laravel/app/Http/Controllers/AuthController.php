@@ -35,7 +35,7 @@ class AuthController extends Controller
         $user = User::where('email','=', $fields['email'])->first();
         if($user && $user -> password == $fields['password']){
             Auth::login($user);
-            return redirect() -> intended('dashboard'); 
+            return redirect() -> intended('/'); 
         }else{
             return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
         }

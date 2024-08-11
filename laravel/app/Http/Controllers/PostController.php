@@ -15,8 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
+        //retrieve all post from DB
+        $posts = Post::orderBy("created_at","desc")->get();
         //redirect to posts page
-        return view('posts.index');
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**

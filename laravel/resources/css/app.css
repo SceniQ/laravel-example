@@ -69,4 +69,16 @@
     .round-btn {
         @apply w-8 h-8 overflow-auto rounded-full bg-slate-100 focus:outline-none focus:ring-1 focus:ring-slate-100 focus:ring-offset-2 focus:ring-offset-slate-800;
     }
+    .btn {
+        @apply relative enabled:bg-slate-800 enabled:active:bg-slate-900 enabled:hover:bg-slate-700 p-2 rounded-md text-white block w-full disabled:bg-slate-500 disabled:cursor-wait;
+    }
+    .card {
+        @apply bg-white p-6 rounded-lg shadow-lg border border-slate-200;
+    }
+    .username {
+        @apply py-2 pl-4 border-b border-slate-200 text-xs text-slate-700;
+    }
+    .input {
+        @apply block w-full p-2 rounded-md ring-1 ring-slate-600 focus:ring-slate-900 focus:ring-2 outline-0 border-0 mt-1;
+    }
 }
