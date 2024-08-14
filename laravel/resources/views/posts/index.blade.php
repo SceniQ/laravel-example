@@ -1,7 +1,6 @@
 <x-layout>
     @auth
         <h1 class="title">Latest posts for your timeline, {{ auth()->user()->username}}</h1>
-
         <div class="grid grid-cols-2 gap-6">
             @foreach ($posts as $post)
                 <div class="card">
@@ -18,6 +17,9 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div>
+            {{$posts->links()}}
         </div>
     @endauth
     @guest
