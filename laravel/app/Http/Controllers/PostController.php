@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -37,9 +37,19 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+        //validate
+        $fields = $request->validate([
+            'title' => ['required','max:255'],
+            'body' => ['required'],
+        ]);
+        //create post
+        Auth::user()->posts()->create($fields);
+        //Post::create(['user_id'=> Auth::id(),'title'=>$fields['title'],'body'=>$fields['body']]);
+        // //route to homepage
+        return back()->with('success','Post created successfully!'); 
+
     }
 
     /**
@@ -71,7 +81,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
         //
     }
