@@ -31,9 +31,12 @@
                            <p class="error">{{ $message }}</p> 
                         @enderror
                 </div>
-                {{-- Create button --}}
+                {{-- Create btn --}}
                 <button class="primary-btn">Create</button>
 
                 </form>
         </div>
+
+        {{-- Users' posts --}}
+        <h2 class="font-bold mb-4">Your latest posts</h2>
 </x-layout>
