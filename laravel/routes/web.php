@@ -18,7 +18,6 @@ use App\Http\Controllers\AuthController;
 
 Route::middleware("auth")->group(function () {
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-    Route::view('/dashboard','users.dashboard')->name('dashboard');
 });
 
 Route::middleware("guest")->group(function () {
