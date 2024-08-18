@@ -31,3 +31,5 @@ Route::middleware("guest")->group(function () {
 Route::redirect('/','posts') ->name('home');
 Route::resource('posts',PostController::class);
 Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
+
+Route::get('/{user}/posts',[PostController::class,'userPosts'])->name('posts.user');   

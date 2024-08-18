@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -95,5 +96,17 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function userPosts(User $user){
+
+        $userPosts = $user->posts()->latest()->paginate(6);
+        $username = $user->username;
+        //route to user's posts page
+        return view('users.posts',[
+            'posts'=> $userPosts,
+            'username'=> $username,
+        
+        ]);
     }
 }
