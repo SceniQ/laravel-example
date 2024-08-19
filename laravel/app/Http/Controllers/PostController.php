@@ -95,7 +95,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        //remove selected post
+        //dd('Deleted!');
+        $post->delete();
+        return back()->with('delete','Post deleted successfully!');
     }
 
     public function userPosts(User $user){

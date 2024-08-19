@@ -5,10 +5,9 @@
                 <h2 class="font-bold mb-4"> Create a post</h2>
                 
                 @if (session('success'))
-                        <div class="mb-2">
                                 <x-flashmsg msg="{{session('success')}}"/>
-                        </div>
-
+                        @elseif(session('delete'))
+                                <x-flashmsg msg="{{session('delete')}}" bg="bg-red-500"/>
                 @endif
 
                 <form action="{{ route('posts.store')}}" method="post">
@@ -41,7 +40,14 @@
         <h2 class="font-bold mb-4">Your latest posts</h2>
         <div class="grid grid-cols-2 gap-6">
             @foreach ($posts as $post)
-                <x-postcard :post="$post"/>
+                <x-postcard :post="$post">
+                {{--DELETE --}}
+                <form action="{{route('posts.destroy', $post)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="bg-red-500 text-white px-2 py-1 text-xs rounded-md">DELETE</button>
+                </form>
+                </x-postcard>
             @endforeach
         </div>
         <div>

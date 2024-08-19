@@ -16,6 +16,9 @@
     <div class="text-sm">
         <span>{{ Str::words($post->body,15)}}</span>
         <a href="{{route('posts.show',$post)}}" class="text-blue-500 ml-2">Read more &Rarr;</a>
+        <div>
+            {{$slot}}
+        </div>
     </div>
     @endif
 </div>
