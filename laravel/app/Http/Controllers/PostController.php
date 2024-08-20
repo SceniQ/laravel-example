@@ -72,7 +72,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', ['post'=> $post]);
     }
 
     /**
@@ -84,7 +84,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        //validate
+        $fields = $request->validate([
+            'title' => ['required','max:255'],
+            'body' => ['required'],
+        ]);
+        //update post
+        $post->update($fields);
+        // //route to homepage
+        return redirect('dashboard')->with('success','Post updated successfully!'); 
     }
 
     /**
