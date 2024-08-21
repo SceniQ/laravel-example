@@ -6,9 +6,16 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -72,6 +79,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        //dd($post);
+        Gate::authorize('verify',$post);
         return view('posts.edit', ['post'=> $post]);
     }
 
@@ -84,6 +93,8 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+        Gate::authorize('verify',$post);
         //validate
         $fields = $request->validate([
             'title' => ['required','max:255'],
@@ -103,6 +114,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        Gate::authorize('verify',$post);
         //remove selected post
         //dd('Deleted!');
         $post->delete();
@@ -117,7 +129,6 @@ class PostController extends Controller
         return view('users.posts',[
             'posts'=> $userPosts,
             'username'=> $username,
-        
         ]);
     }
 }
