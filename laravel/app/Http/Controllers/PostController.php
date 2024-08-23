@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -47,13 +48,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
         //validate
         $fields = $request->validate([
             'title' => ['required','max:255'],
             'body' => ['required'],
+            'image'=> ['nullable','file','max:1000','mimes:png,jpg,gif,webp'],
         ]);
+
+        $imagePath = 'post_images/gallery.png';
+        if($request->hasFile('image')){
+            $imagePath = Storage::disk('public')->put('post_images',$request->image);
+        }
         //create post
-        Auth::user()->posts()->create($fields);
+        Auth::user()->posts()->create([
+            'title' => $fields['title'],
+            'body' => $fields['body'],
+            'image_path' => $imagePath,
+        ]);
         //Post::create(['user_id'=> Auth::id(),'title'=>$fields['title'],'body'=>$fields['body']]);
         // //route to homepage
         return back()->with('success','Post created successfully!'); 

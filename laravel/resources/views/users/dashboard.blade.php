@@ -10,7 +10,7 @@
                                 <x-flashmsg msg="{{session('delete')}}" bg="bg-red-500"/>
                 @endif
 
-                <form action="{{ route('posts.store')}}" method="post">
+                <form action="{{ route('posts.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 {{-- Post title --}}
                 <div class="mb-4">
@@ -30,6 +30,15 @@
                            <p class="error">{{ $message }}</p> 
                         @enderror
                 </div>
+                {{--Image upload --}}
+                <div class="mb-4">
+                        <label for="image">Image (optional)</label>
+                        <input type="file" name="image" id="image">
+                        @error('image')
+                           <p class="error">{{ $message }}</p> 
+                        @enderror
+                </div>
+
                 {{-- Create btn --}}
                 <button class="primary-btn">Create</button>
 

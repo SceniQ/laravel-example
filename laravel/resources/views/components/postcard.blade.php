@@ -7,6 +7,12 @@
         <span>Posted {{$post->created_at->diffForHumans()}} by</span>
         <a href="{{route('posts.user', $post->user)}}" class="text-blue-500 font-medium">{{$post->user->username}}</a>
     </div>
+    
+    <div>
+        <img src="{{asset('storage/'.$post->image_path)}}" alt="post_img">
+    </div>
+
+
     {{-- Body --}}
     @if ($full)
     <div class="text-sm">
