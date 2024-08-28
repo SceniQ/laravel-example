@@ -8,8 +8,15 @@
         <a href="{{route('posts.user', $post->user)}}" class="text-blue-500 font-medium">{{$post->user->username}}</a>
     </div>
     
+    <div class="h-64 rounded-md mb-4 w-full object-cover overflow-hidden">
+        @if ($post->image_path)
+            <img src="{{asset('storage/'.$post->image_path)}}" alt="post_img">
+        @else
+        <img src="{{asset('storage/post_images/gallery.png')}}" alt="post_img">
+        @endif
+    </div>
     <div>
-        <img src="{{asset('storage/'.$post->image_path)}}" alt="post_img">
+        
     </div>
 
 

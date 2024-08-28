@@ -3,7 +3,7 @@
     <div class="card">
         <h2 class="font-bold mb-4"> Update your post</h2>
 
-        <form action="{{ route('posts.update', $post)}}" method="post">
+        <form action="{{ route('posts.update', $post)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         {{-- Post title --}}
@@ -24,7 +24,20 @@
                    <p class="error">{{ $message }}</p> 
                 @enderror
         </div>
-        {{-- Create btn --}}
+
+         {{--Image upload --}}
+         @if ($post->image_path)
+                <label>Current image</label>
+                <div class="h-64 rounded-md mb-4 w-1/4 object-cover overflow-hidden">
+                        <img src="{{asset('storage/'.$post->image_path)}}" alt="post_img">
+                </div>
+         @endif
+         <input type="file" name="image" id="image">
+                        @error('image')
+                           <p class="error">{{ $message }}</p> 
+                        @enderror
+
+        {{-- Update btn --}}
         <button class="primary-btn">Update</button>
 
         </form>

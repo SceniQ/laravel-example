@@ -53,10 +53,10 @@ class PostController extends Controller
         $fields = $request->validate([
             'title' => ['required','max:255'],
             'body' => ['required'],
-            'image'=> ['nullable','file','max:1000','mimes:png,jpg,gif,webp'],
+            'image'=> ['nullable','file','max:2000','mimes:png,jpg,gif,webp'],
         ]);
 
-        $imagePath = 'post_images/gallery.png';
+        $imagePath = null;
         if($request->hasFile('image')){
             $imagePath = Storage::disk('public')->put('post_images',$request->image);
         }
@@ -111,9 +111,21 @@ class PostController extends Controller
         $fields = $request->validate([
             'title' => ['required','max:255'],
             'body' => ['required'],
+            'image'=> ['nullable','file','max:2000','mimes:png,jpg,gif,webp'],
         ]);
         //update post
-        $post->update($fields);
+        $imagePath = $post-> image_path ?? null;
+        if($request->hasFile('image')){
+            if($post->image_path){
+                Storage::disk('public')->delete($post->image_path);
+            }
+            $imagePath = Storage::disk('public')->put('post_images',$request->image);
+        }
+        $post->update([
+            'title' => $fields['title'],
+            'body' => $fields['body'],
+            'image_path' => $imagePath,
+        ]);
         // //route to homepage
         return redirect('dashboard')->with('success','Post updated successfully!'); 
     }
@@ -127,8 +139,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Gate::authorize('verify',$post);
-        //remove selected post
-        //dd('Deleted!');
+        //de;ete image if exists
+        if($post->image_path){
+            Storage::disk('public')->delete($post->image_path);
+        }
+
         $post->delete();
         return back()->with('delete','Post deleted successfully!');
     }

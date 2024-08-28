@@ -21,6 +21,7 @@ class PostFactory extends Factory
             'user_id' => 1,
             'title'=> fake()->sentence(10),
             'body'=> fake()->paragraph(30),
+            'image_path' => 'post_images/gallery.png',
         ];
     }
 }
