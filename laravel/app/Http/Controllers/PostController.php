@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -14,7 +16,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index','show']);
+        //$this->middleware('auth')->except(['index','show']);
     }
 
     /**
@@ -61,12 +63,14 @@ class PostController extends Controller
             $imagePath = Storage::disk('public')->put('post_images',$request->image);
         }
         //create post
-        Auth::user()->posts()->create([
+        $post = Auth::user()->posts()->create([
             'title' => $fields['title'],
             'body' => $fields['body'],
             'image_path' => $imagePath,
         ]);
-        //Post::create(['user_id'=> Auth::id(),'title'=>$fields['title'],'body'=>$fields['body']]);
+        //send email
+        $user = Auth::user();
+        Mail::to($user)->send(new WelcomeMail($user,$post));
         // //route to homepage
         return back()->with('success','Post created successfully!'); 
 

@@ -15,9 +15,6 @@
         <img src="{{asset('storage/post_images/gallery.png')}}" alt="post_img">
         @endif
     </div>
-    <div>
-        
-    </div>
 
 
     {{-- Body --}}
