@@ -63,13 +63,13 @@ class PostController extends Controller
             $imagePath = Storage::disk('public')->put('post_images',$request->image);
         }
         //create post
-        $post = Auth::user()->posts()->create([
+        $user = Auth::user();
+        $post = $user->posts()->create([
             'title' => $fields['title'],
             'body' => $fields['body'],
             'image_path' => $imagePath,
         ]);
         //send email
-        $user = Auth::user();
         Mail::to($user)->send(new WelcomeMail($user,$post));
         // //route to homepage
         return back()->with('success','Post created successfully!'); 
