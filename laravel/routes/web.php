@@ -17,8 +17,18 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::middleware("auth")->group(function () {
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'index'])->middleware('verified')->name('dashboard');
+    Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
     //Route::view('/dashboard','users.dashboard')->name('dashboard');
+    
+    //The Email Verification Notice
+    Route::get('/email/verify',[AuthController::class, 'verifyNotice'])->name('verification.notice');
+    //The Email Verification Handler
+    Route::get('/email/verify/{id}/{hash}',[AuthController::class, 'verifyEmail'])->middleware('signed')->name('verification.verify');
+    //Resending the Verification Email
+    Route::post('/email/verification-notification',[AuthController::class, 'verifyHandler'])->middleware('throttle:6,1')->name('verification.send');
+    //Protecting Routes
+
 });
 
 Route::middleware("guest")->group(function () {
@@ -30,5 +40,4 @@ Route::middleware("guest")->group(function () {
 });
 Route::redirect('/','posts') ->name('home');
 Route::resource('posts',PostController::class);
-Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 Route::get('/{user}/posts',[PostController::class,'userPosts'])->name('posts.user');   
