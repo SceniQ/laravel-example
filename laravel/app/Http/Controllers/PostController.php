@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserSubscribed;
 use App\Mail\WelcomeMail;
 use App\Models\Post;
 use App\Models\User;
@@ -25,7 +26,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {      
         //retrieve all post from DB
         $posts = Post::latest()->paginate(6);
         //redirect to posts page

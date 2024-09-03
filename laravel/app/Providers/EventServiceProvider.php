@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\UserSubscribed;
+use App\Listeners\SendSubscriberEmail;
+use App\Listeners\UpdateSubscriberTable;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,6 +31,21 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Event::listen(
+            UserSubscribed::class,
+            [SendSubscriberEmail::class, 'handle']
+            
+        );
+
+        Event::listen(
+            UserSubscribed::class,
+            [UpdateSubscriberTable::class, 'handle']
+            
+        );
+     
+        Event::listen(function (UserSubscribed $event) {
+            //
+        });
     }
 
     /**

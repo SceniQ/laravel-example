@@ -34,6 +34,12 @@
                 <input type="password" name="password_confirmation" class="input @error('password') ring-red-500" @enderror">
             </div>
 
+            {{-- Subscribe checkbox --}}
+            <div class="mb-4">
+                <input type="checkbox" name="subscribe" id="subsrcibe">
+                <label for="subscribe">Subscribe to our newsletter?</label>
+            </div>
+
             {{-- Submit btn --}}
             <button class="primary-btn" x-ref="btn">Register</button>
 

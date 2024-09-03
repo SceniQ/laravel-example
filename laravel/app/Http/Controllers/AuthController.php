@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserSubscribed;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -25,6 +26,13 @@ class AuthController extends Controller
         Auth::login($user);
         //4 - send email verification
         event(new Registered($user));
+
+        //call event if user clicked
+        if($request->subscribe){
+            event(new UserSubscribed($user));
+        }
+       
+
         //5 - Redirect to Homepage
         return redirect() -> route('dashboard');
 
