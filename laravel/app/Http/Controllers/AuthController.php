@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -45,12 +46,12 @@ class AuthController extends Controller
             'password' => ['required']
         ]);
 
-        $user = User::where('email','=', $fields['email'])->first();
-        if($user && $user -> password == $fields['password']){
-            Auth::login($user);
-            return redirect() -> intended('dashboard'); 
-        }else{
-            return back() -> withErrors(['failed'=> 'The provided credentials do match our records.']);
+        if (Auth::attempt($fields, $request->remember)) {
+            return redirect()->intended('dashboard');
+        } else {
+            return back()->withErrors([
+                'failed' => 'The provided credentials do not match our records.'
+            ]);
         }
     }
 
@@ -75,5 +76,7 @@ class AuthController extends Controller
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', 'Verification link sent!');
     }
+
+    
 
 }
